@@ -8,13 +8,13 @@ import { OrganizationResult } from "../interface/organization/organization.inter
 export default function PageUI() {
   const { data: OrganizationData } = useFormQuery<OrganizationResult>({
     key: ["Organizations"],
-    url: `${process.env.BASE_URL}/maintenance/organizations`,
+    url: `https://dost-server-git-development-joshuaramins-projects.vercel.app/maintenance/organizations`,
   });
 
   const { data: EducationalResourceData, isLoading: EducationLoading } =
     useFormQuery<EducationalResourceResult>({
       key: ["EducationalResources"],
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/maintenance/educational-resources`,
+      url: `https://dost-server-git-development-joshuaramins-projects.vercel.app/maintenance/educational-resources`,
       params: {
         status: "PUBLISHED",
       },
