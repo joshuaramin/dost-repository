@@ -14,7 +14,7 @@ export default function PageUI() {
   const { data: EducationalResourceData, isLoading: EducationLoading } =
     useFormQuery<EducationalResourceResult>({
       key: ["EducationalResources"],
-      url: `${process.env.BASE_URL}/maintenance/educational-resources`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/maintenance/educational-resources`,
       params: {
         status: "PUBLISHED",
       },
