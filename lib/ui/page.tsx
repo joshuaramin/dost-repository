@@ -11,7 +11,7 @@ export default function PageUI() {
     error: organizationError,
   } = useFormQuery<OrganizationResult>({
     key: ["Organizations"],
-    url: "/maintenance/organization",
+    url: "https://dost-server-git-development-joshuaramins-projects.vercel.app/maintenance/organization",
   });
 
   const {
@@ -20,7 +20,7 @@ export default function PageUI() {
     error: educationError,
   } = useFormQuery<EducationalResourceResult>({
     key: ["EducationalResources"],
-    url: "/maintenance/educational-resource",
+    url: "https://dost-server-git-development-joshuaramins-projects.vercel.app/maintenance/educational-resource",
     params: {
       status: "PUBLISHED",
     },
