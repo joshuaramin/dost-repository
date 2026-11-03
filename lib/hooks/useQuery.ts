@@ -1,3 +1,5 @@
+"use client";
+
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -17,21 +19,20 @@ const useFormQuery = <TData = unknown, TVariables = unknown>({
   key,
   url,
   headers,
-  enabled,
+  enabled = true,
   params,
 }: Props<TVariables, TData>) => {
   return useQuery<TData>({
-    queryKey: key,
-    enabled,
+    queryKey: [...key, params],
+    enabled: enabled && Boolean(url),
+
     queryFn: async () => {
-      const res = await axios.get<TData>(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/${url}`,
-        {
-          headers,
-          params,
-        },
-      );
-      return res.data;
+      const response = await axios.get<TData>(url, {
+        headers,
+        params,
+      });
+
+      return response.data;
     },
   });
 };
