@@ -1,31 +1,52 @@
 "use client";
 
-import React from "react";
 import useFormQuery from "../hooks/useQuery";
-import { EducationalResourceResult } from "../interface/education-resource/educational-resources.interface";
-import { OrganizationResult } from "../interface/organization/organization.interface";
+import type { EducationalResourceResult } from "../interface/education-resource/educational-resources.interface";
+import type { OrganizationResult } from "../interface/organization/organization.interface";
 
 export default function PageUI() {
-  const { data: OrganizationData } = useFormQuery<OrganizationResult>({
+  const {
+    data: organizationData,
+    isLoading: organizationLoading,
+    error: organizationError,
+  } = useFormQuery<OrganizationResult>({
     key: ["Organizations"],
-    url: `https://dost-server-git-development-joshuaramins-projects.vercel.app/maintenance/organizations`,
+    url: "/maintenance/organization",
   });
 
-  const { data: EducationalResourceData, isLoading: EducationLoading } =
-    useFormQuery<EducationalResourceResult>({
-      key: ["EducationalResources"],
-      url: `https://dost-server-git-development-joshuaramins-projects.vercel.app/maintenance/educational-resources`,
-      params: {
-        status: "PUBLISHED",
-      },
-    });
+  const {
+    data: educationalResourceData,
+    isLoading: educationLoading,
+    error: educationError,
+  } = useFormQuery<EducationalResourceResult>({
+    key: ["EducationalResources"],
+    url: "/maintenance/educational-resource",
+    params: {
+      status: "PUBLISHED",
+    },
+  });
+
+  if (organizationLoading || educationLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (organizationError || educationError) {
+    return (
+      <div>
+        <p>Failed to load data.</p>
+        <p>{organizationError?.message}</p>
+        <p>{educationError?.message}</p>
+      </div>
+    );
+  }
 
   return (
     <div>
       <div>
-        Educational Resources: {EducationalResourceData?.data.totalCount}
+        Educational Resources: {educationalResourceData?.data.totalCount ?? 0}
       </div>
-      <div>Organizations: {OrganizationData?.data.totalCount}</div>
+
+      <div>Organizations: {organizationData?.data.totalCount ?? 0}</div>
     </div>
   );
 }
