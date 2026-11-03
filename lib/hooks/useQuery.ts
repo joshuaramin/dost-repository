@@ -21,12 +21,16 @@ const useFormQuery = <TData = unknown, TVariables = unknown>({
   params,
 }: Props<TVariables, TData>) => {
   return useQuery<TData>({
-    queryKey: [...key, params],
-    enabled: enabled && Boolean(BASE_URL),
+    queryKey: [...key, url, params],
+    enabled: enabled && Boolean(BASE_URL) && Boolean(url),
 
     queryFn: async () => {
       if (!BASE_URL) {
         throw new Error("NEXT_PUBLIC_BASE_URL is not configured.");
+      }
+
+      if (!url) {
+        throw new Error("API endpoint is required.");
       }
 
       const endpoint = `${BASE_URL.replace(/\/+$/, "")}/${url.replace(/^\/+/, "")}`;

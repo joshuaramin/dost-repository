@@ -25,9 +25,7 @@ export default function PageUI() {
       <div>
         Educational Resources: {EducationalResourceData?.data.totalCount}
       </div>
-      <div>
-        Educational Resources: {EducationalResourceData?.data.totalCount}
-      </div>
+      <div>Organizations: {OrganizationData?.data.totalCount}</div>
     </div>
   );
 }
