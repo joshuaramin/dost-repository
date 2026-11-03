@@ -8,13 +8,13 @@ import { OrganizationResult } from "../interface/organization/organization.inter
 export default function PageUI() {
   const { data: OrganizationData } = useFormQuery<OrganizationResult>({
     key: ["Organizations"],
-    url: "maintenance/organization",
+    url: `${process.env.BASE_URL}/maintenance/organizations`,
   });
 
   const { data: EducationalResourceData, isLoading: EducationLoading } =
     useFormQuery<EducationalResourceResult>({
       key: ["EducationalResources"],
-      url: "maintenance/educational-resource",
+      url: `${process.env.BASE_URL}/maintenance/educational-resources`,
       params: {
         status: "PUBLISHED",
       },

@@ -33,13 +33,10 @@ const useFormQuery = <TData = unknown, TVariables = unknown>({
         throw new Error("NEXT_PUBLIC_BASE_URL is undefined");
       }
 
-      const response = await api.get(
-        `https://dost-server-git-development-joshuaramins-projects.vercel.app/${url}`,
-        {
-          headers,
-          params,
-        },
-      );
+      const response = await api.get(url, {
+        headers,
+        params,
+      });
 
       return response.data;
     },
