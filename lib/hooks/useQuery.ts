@@ -3,15 +3,13 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-export interface AxiosHeaders {
-  [key: string]: string | undefined;
-}
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 type Props<TVariables, TData> = {
   key: unknown[];
   url: string;
   enabled?: boolean;
-  headers?: AxiosHeaders;
+  headers?: Record<string, string | undefined>;
   params?: TVariables;
 };
 
@@ -24,10 +22,16 @@ const useFormQuery = <TData = unknown, TVariables = unknown>({
 }: Props<TVariables, TData>) => {
   return useQuery<TData>({
     queryKey: [...key, params],
-    enabled: enabled && Boolean(url),
+    enabled: enabled && Boolean(BASE_URL),
 
     queryFn: async () => {
-      const response = await axios.get<TData>(url, {
+      if (!BASE_URL) {
+        throw new Error("NEXT_PUBLIC_BASE_URL is not configured.");
+      }
+
+      const endpoint = `${BASE_URL.replace(/\/+$/, "")}/${url.replace(/^\/+/, "")}`;
+
+      const response = await axios.get<TData>(endpoint, {
         headers,
         params,
       });

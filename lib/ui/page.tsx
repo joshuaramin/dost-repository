@@ -8,13 +8,13 @@ import { OrganizationResult } from "../interface/organization/organization.inter
 export default function PageUI() {
   const { data: OrganizationData } = useFormQuery<OrganizationResult>({
     key: ["Organizations"],
-    url: "https://dost-server-git-development-joshuaramins-projects.vercel.app/maintenance/organization",
+    url: "maintenance/organization",
   });
 
   const { data: EducationalResourceData, isLoading: EducationLoading } =
     useFormQuery<EducationalResourceResult>({
       key: ["EducationalResources"],
-      url: "https://dost-server-git-development-joshuaramins-projects.vercel.app/maintenance/educational-resource",
+      url: "maintenance/educational-resource",
       params: {
         status: "PUBLISHED",
       },
@@ -25,7 +25,9 @@ export default function PageUI() {
       <div>
         Educational Resources: {EducationalResourceData?.data.totalCount}
       </div>
-      <div>Organizations: {OrganizationData?.data.totalCount}</div>
+      <div>
+        Educational Resources: {EducationalResourceData?.data.totalCount}
+      </div>
     </div>
   );
 }
